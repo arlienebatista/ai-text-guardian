@@ -112,7 +112,7 @@ function StatRow({ label, value, highlight, negative, isSubRow }: {
     <div className={`flex justify-between items-center py-2 border-b border-border/30 last:border-b-0 ${
       isSubRow ? "pl-2.5" : ""
     }`}>
-      <span className={`text-xs ${
+      <span className={`text-[13px] sm:text-sm ${
         highlight 
           ? 'font-semibold text-foreground' 
           : isSubRow 
@@ -121,7 +121,7 @@ function StatRow({ label, value, highlight, negative, isSubRow }: {
       }`}>
         {label}
       </span>
-      <span className={`text-xs font-mono font-semibold tabular ${
+      <span className={`text-[13px] sm:text-sm font-mono font-semibold tabular ${
         negative ? 'text-destructive' : highlight ? 'text-foreground' : 'text-muted-foreground'
       }`}>
         {value.toLocaleString()}

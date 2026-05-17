@@ -39,14 +39,14 @@ const Index = () => {
   const [useMonospace, setUseMonospace] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   
-  // Controle do Tema Inteligente (Light/Dark)
+  // Controle do Tema Inteligente - Inicializa no Tema Sol por padrão
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme");
       if (saved === "light" || saved === "dark") return saved;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      return "light"; // Default light (Tema Sol)
     }
-    return "dark"; // Default dark
+    return "light"; // Default light (Tema Sol)
   });
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -61,6 +61,23 @@ const Index = () => {
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  // Listener para ajustar o layout automaticamente e torná-lo super responsivo em celulares
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setWorkspaceMode("tabs");
+      } else {
+        setWorkspaceMode("split");
+      }
+    };
+    
+    // Executa no carregamento inicial
+    handleResize();
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
@@ -127,11 +144,11 @@ const Index = () => {
       </div>
 
       {/* Navbar Premium */}
-      <header className="sticky top-0 z-50 w-full bg-background/55 backdrop-blur-md border-b border-border/40 px-4 py-3 mb-6 transition-all duration-300">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full bg-background/55 backdrop-blur-md border-b border-border/40 px-4 py-3.5 mb-6 transition-all duration-300">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2.5 group">
             <div className={cn(
-              "p-2 rounded-xl transition-all duration-500 scale-100 group-hover:scale-105 shadow-sm",
+              "p-2.5 rounded-xl transition-all duration-500 scale-100 group-hover:scale-105 shadow-sm",
               text === "" 
                 ? "bg-primary/10 text-primary" 
                 : isSafeText 
@@ -139,21 +156,21 @@ const Index = () => {
                   : "bg-amber-500/10 text-amber-500 dark:text-amber-400"
             )}>
               {text !== "" && isSafeText ? (
-                <ShieldCheck className="w-5.5 h-5.5" />
+                <ShieldCheck className="w-6 h-6" />
               ) : text !== "" && !isSafeText ? (
-                <ShieldAlert className="w-5.5 h-5.5 animate-pulse" />
+                <ShieldAlert className="w-6 h-6 animate-pulse" />
               ) : (
-                <ShieldCheck className="w-5.5 h-5.5" />
+                <ShieldCheck className="w-6 h-6" />
               )}
             </div>
             <div>
-              <h1 className="text-base font-extrabold tracking-tight text-foreground flex items-center gap-1.5">
+              <h1 className="text-base sm:text-lg font-black tracking-tight text-foreground flex items-center gap-1.5">
                 AI Text Guardian
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
                   v1.1
                 </span>
               </h1>
-              <p className="text-[10px] text-muted-foreground hidden sm:block">
+              <p className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">
                 Limpador inteligente de anomalias invisíveis de IA
               </p>
             </div>
@@ -164,9 +181,9 @@ const Index = () => {
             {text && (
               <button
                 onClick={handleClear}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-xl border border-destructive/20 text-destructive bg-destructive/5 hover:bg-destructive/10 text-xs font-semibold transition-all active:scale-95"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-destructive/20 text-destructive bg-destructive/5 hover:bg-destructive/10 text-xs font-bold transition-all active:scale-95"
               >
-                <Trash2 className="w-3.5 h-3.5" />
+                <Trash2 className="w-4 h-4" />
                 <span className="hidden sm:inline">Limpar</span>
               </button>
             )}
@@ -175,12 +192,12 @@ const Index = () => {
             <button
               onClick={toggleTheme}
               className="p-2.5 rounded-xl border border-border/40 bg-card hover:bg-muted/40 text-foreground transition-all duration-300 active:scale-90 hover:rotate-12"
-              title={theme === "dark" ? "Ativar Modo Claro" : "Ativar Modo Escuro"}
+              title={theme === "dark" ? "Ativar Modo Claro (Sol)" : "Ativar Modo Escuro (Lua)"}
             >
               {theme === "dark" ? (
-                <Sun className="w-4 h-4 text-amber-400" />
+                <Sun className="w-4.5 h-4.5 text-amber-400" />
               ) : (
-                <Moon className="w-4 h-4 text-indigo-500" />
+                <Moon className="w-4.5 h-4.5 text-indigo-500" />
               )}
             </button>
           </div>
@@ -188,25 +205,27 @@ const Index = () => {
       </header>
 
       {/* Conteúdo Principal */}
-      <main className="max-w-5xl mx-auto flex-1 w-full px-4">
+      <main className="max-w-6xl mx-auto flex-1 w-full px-4 sm:px-6">
         {/* Banner de Apresentação Hero */}
-        <section className="mb-8 text-center sm:text-left flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/15 relative overflow-hidden backdrop-blur-sm">
-          <div className="space-y-1 z-10">
-            <h2 className="text-xl sm:text-2xl font-black text-foreground">
-              Higienize seus Textos de Inteligência Artificial
-            </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-xl">
-              Detecte e filtre instantaneamente marcações d'água de Unicode, hífens especiais, aspas tipográficas e espaços invisíveis gerados por IAs.
-            </p>
-          </div>
-          <div className="shrink-0 z-10 flex justify-center">
-            <button
-              onClick={handleLoadDemo}
-              className="flex items-center gap-2 bg-primary text-primary-foreground text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-primary/95 shadow-md shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 active:scale-95 hover:translate-x-0.5"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Carregar Texto Demo</span>
-            </button>
+        <section className="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/15 relative overflow-hidden backdrop-blur-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-1 z-10">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-black text-foreground">
+                Higienize seus Textos de Inteligência Artificial
+              </h2>
+              <p className="text-xs sm:text-sm text-muted-foreground max-w-xl">
+                Detecte e filtre instantaneamente marcações d'água de Unicode, hífens especiais, aspas tipográficas e espaços invisíveis gerados por IAs.
+              </p>
+            </div>
+            <div className="shrink-0 z-10 flex justify-start sm:justify-center">
+              <button
+                onClick={handleLoadDemo}
+                className="flex items-center gap-2 bg-primary text-primary-foreground text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl hover:bg-primary/95 shadow-md shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 active:scale-95 hover:translate-x-0.5"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Carregar Texto Demo</span>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -256,20 +275,20 @@ const Index = () => {
                   )}
                   title="Alternar Fonte (Sans-serif / Monospace)"
                 >
-                  <Type className="w-4 h-4" />
+                  <Type className="w-4.5 h-4.5" />
                 </button>
               </div>
             </div>
 
             {/* Renderizador Dinâmico dos Editores baseados no Modo selecionado */}
             {workspaceMode === "split" ? (
-              /* MODO LADO A LADO */
+              /* MODO LADO A LADO - Responsivo para empilhamento vertical em celulares */
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Editor Original */}
                 <GlassCard className="flex flex-col h-full">
                   <GlassCardHeader>
                     <CardLabel>📝 Texto Original</CardLabel>
-                    <span className="text-[10px] sm:text-[11px] tabular text-muted-foreground/80 font-mono">
+                    <span className="text-[10px] sm:text-xs tabular text-muted-foreground/80 font-mono">
                       {text.length.toLocaleString()} carac.
                     </span>
                   </GlassCardHeader>
@@ -279,7 +298,7 @@ const Index = () => {
                     onChange={handleTextChange}
                     placeholder="Cole seu texto gerado por IA aqui para iniciar a análise..."
                     className={cn(
-                      "w-full h-80 p-4 sm:p-5 text-sm leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
+                      "w-full h-80 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
                       useMonospace ? "font-mono" : "font-sans"
                     )}
                   />
@@ -292,11 +311,11 @@ const Index = () => {
                       {showCleaned ? "✨ Resultado Higienizado" : "🔍 Análise Visual"}
                     </CardLabel>
                     {text && (
-                      <div className="flex gap-2">
+                      <div className="flex gap-2.5">
                         {!showCleaned && total > 0 && (
                           <button
                             onClick={handleClean}
-                            className="text-[10px] sm:text-[11px] font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
+                            className="text-[10px] sm:text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
                           >
                             Limpar Tudo
                           </button>
@@ -304,11 +323,11 @@ const Index = () => {
                         <button
                           onClick={handleCopy}
                           className={cn(
-                            "text-[10px] sm:text-[11px] font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
+                            "text-[10px] sm:text-xs font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
                             isCopied ? "text-emerald-500" : "text-muted-foreground hover:text-foreground"
                           )}
                         >
-                          {isCopied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                          {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                           {copyLabel}
                         </button>
                       </div>
@@ -316,7 +335,7 @@ const Index = () => {
                   </GlassCardHeader>
                   <div
                     className={cn(
-                      "w-full h-80 p-4 sm:p-5 text-sm leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl transition-all duration-300",
+                      "w-full h-80 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl transition-all duration-300",
                       useMonospace ? "font-mono" : "font-sans",
                       activeCategory ? `isolate-${activeCategory}` : "",
                       text ? "text-foreground" : "text-muted-foreground/50"
@@ -329,7 +348,7 @@ const Index = () => {
               </div>
             ) : (
               /* MODO EM ABAS */
-              <Tabs defaultValue="original" className="w-full">
+              <Tabs defaultValue="original" className="w-full animate-fade-in">
                 <TabsList className="w-full grid grid-cols-2 p-1 bg-muted/20 border border-border/30 rounded-2xl h-12 mb-4 backdrop-blur-sm">
                   <TabsTrigger value="original" className="rounded-xl font-bold py-2.5 text-xs tracking-wide">
                     📝 Editor de Origem
@@ -343,7 +362,7 @@ const Index = () => {
                   <GlassCard>
                     <GlassCardHeader>
                       <CardLabel>📝 Texto Original</CardLabel>
-                      <span className="text-[10px] tabular text-muted-foreground font-mono">
+                      <span className="text-[10px] sm:text-xs tabular text-muted-foreground font-mono">
                         {text.length.toLocaleString()} caracteres
                       </span>
                     </GlassCardHeader>
@@ -353,7 +372,7 @@ const Index = () => {
                       onChange={handleTextChange}
                       placeholder="Cole seu texto de IA aqui..."
                       className={cn(
-                        "w-full h-96 p-4 sm:p-5 text-sm leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
+                        "w-full h-96 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
                         useMonospace ? "font-mono" : "font-sans"
                       )}
                     />
@@ -369,7 +388,7 @@ const Index = () => {
                           {!showCleaned && total > 0 && (
                             <button
                               onClick={handleClean}
-                              className="text-[10px] font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
+                              className="text-[10px] sm:text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
                             >
                               Limpar Tudo
                             </button>
@@ -377,11 +396,11 @@ const Index = () => {
                           <button
                             onClick={handleCopy}
                             className={cn(
-                              "text-[10px] font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
+                              "text-[10px] sm:text-xs font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
                               isCopied ? "text-emerald-500" : "text-muted-foreground hover:text-foreground"
                             )}
                           >
-                            {isCopied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                            {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                             {copyLabel}
                           </button>
                         </div>
@@ -389,7 +408,7 @@ const Index = () => {
                     </GlassCardHeader>
                     <div
                       className={cn(
-                        "w-full h-96 p-4 sm:p-5 text-sm leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl",
+                        "w-full h-96 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl",
                         useMonospace ? "font-mono" : "font-sans",
                         activeCategory ? `isolate-${activeCategory}` : "",
                         text ? "text-foreground" : "text-muted-foreground/50"
@@ -411,13 +430,13 @@ const Index = () => {
                 </div>
                 <div className="space-y-1">
                   <h4 className="text-sm font-semibold text-foreground">Sua área de trabalho está vazia</h4>
-                  <p className="text-xs text-muted-foreground max-w-sm">
+                  <p className="text-xs sm:text-sm text-muted-foreground max-w-sm">
                     Cole seu texto copiado do ChatGPT, Claude ou Gemini acima. Ou, se preferir, carregue nosso exemplo interativo para ver o Guardião funcionando.
                   </p>
                 </div>
                 <button
                   onClick={handleLoadDemo}
-                  className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 border border-primary/20 hover:border-primary/40 bg-primary/5 hover:bg-primary/10 text-primary rounded-xl transition-all duration-200 active:scale-95"
+                  className="flex items-center gap-1.5 text-xs font-bold px-4 py-2.5 border border-primary/20 hover:border-primary/40 bg-primary/5 hover:bg-primary/10 text-primary rounded-xl transition-all duration-200 active:scale-95"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Carregar Exemplo com Artefatos</span>
@@ -426,7 +445,7 @@ const Index = () => {
             )}
           </div>
 
-          {/* Coluna da Barra Lateral (Direita) */}
+          {/* Coluna da Barra Lateral (Direita) - Melhor Organizada e 100% Responsiva */}
           <aside className="lg:col-span-4 space-y-6">
             {/* Painel de Análise */}
             <StatsPanel stats={stats} total={total} charCount={displayedText.length} />
@@ -435,7 +454,7 @@ const Index = () => {
             {text && total > 0 && !showCleaned && (
               <button
                 onClick={handleClean}
-                className="w-full bg-foreground text-background dark:bg-foreground dark:text-background text-xs font-bold py-3.5 rounded-xl hover:opacity-90 transition-all active:scale-[0.98] shadow-md hover:shadow-lg will-change-transform flex items-center justify-center gap-1.5 uppercase tracking-wider"
+                className="w-full bg-foreground text-background dark:bg-foreground dark:text-background text-xs sm:text-sm font-bold py-4 rounded-xl hover:opacity-90 transition-all active:scale-[0.98] shadow-md hover:shadow-lg will-change-transform flex items-center justify-center gap-1.5 uppercase tracking-wider"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Limpar Caracteres Suspeitos</span>
@@ -445,17 +464,20 @@ const Index = () => {
             {/* Legenda Interativa */}
             <Legend activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
             
-            {/* Apoio Financeiro / Pix */}
-            <PixDonation />
-            
-            {/* Caixa Informativa */}
-            <InfoCard />
+            {/* Organizador de Widgets Secundários - Lado a Lado em Tablets, empilhados em Celulares e Desktops */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+              {/* Apoio Financeiro / Pix */}
+              <PixDonation />
+              
+              {/* Caixa Informativa */}
+              <InfoCard />
+            </div>
           </aside>
         </div>
       </main>
       
       {/* Rodapé Modernizado */}
-      <footer className="max-w-5xl mx-auto mt-16 py-6 text-center text-[11px] sm:text-xs text-muted-foreground/80 border-t border-border/30 w-full px-4">
+      <footer className="max-w-6xl mx-auto mt-16 py-6 text-center text-[11px] sm:text-xs text-muted-foreground/80 border-t border-border/30 w-full px-4 sm:px-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>© 2026 AI Text Guardian. Todos os direitos reservados.</p>
           <p>

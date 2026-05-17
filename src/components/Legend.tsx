@@ -58,7 +58,7 @@ export function Legend({ activeCategory, onSelectCategory }: LegendProps) {
             >
               <div className="flex items-center gap-2.5">
                 <div className={cn("w-3.5 h-3.5 rounded-sm border-2 shrink-0 transition-transform duration-200", colorMap[key], isActive && "scale-110")} />
-                <span className={cn("text-xs transition-colors", isActive ? "font-medium text-foreground" : "text-muted-foreground")}>
+                <span className={cn("text-[13px] sm:text-sm transition-colors", isActive ? "font-medium text-foreground" : "text-muted-foreground")}>
                   {label}
                 </span>
               </div>
