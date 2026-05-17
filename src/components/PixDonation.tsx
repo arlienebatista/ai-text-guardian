@@ -31,13 +31,13 @@ export function PixDonation() {
             <h4 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1">
               Apoie o Projeto
             </h4>
-            <span className="text-[10px] text-muted-foreground">Contribua com a manutenção</span>
+            <span className="text-[10px] text-muted-foreground">Incentive novas ferramentas</span>
           </div>
         </div>
 
         {/* Text */}
         <p className="text-xs text-muted-foreground leading-relaxed">
-          O <strong>IA Text Guardian</strong> é gratuito e open source. Se ele foi útil para você, faça uma doação de qualquer valor via Pix para ajudar a cobrir custos de hospedagem!
+          O <strong>IA Text Guardian</strong> é gratuito e open source. Se ele foi útil para você, faça uma doação de qualquer valor via Pix para incentivar o desenvolvimento de novas ferramentas como esta!
         </p>
 
         {/* Copy Box */}
