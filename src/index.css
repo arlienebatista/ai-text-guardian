@@ -1,0 +1,304 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 25% 97%;
+    --foreground: 224 71% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+
+    --primary: 250 89% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 20% 10%;
+
+    --muted: 220 14% 93%;
+    --muted-foreground: 220 9% 40%;
+
+    --accent: 250 89% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 89%;
+    --input: 220 13% 89%;
+    --ring: 250 89% 65%;
+
+    --radius: 16px;
+
+    /* Custom high fidelity design tokens */
+    --surface-glass: rgba(255, 255, 255, 0.45);
+    --border-glass: rgba(255, 255, 255, 0.5);
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Artifact highlights (Light Mode) */
+    --artifact-dash: 348 83% 47%;
+    --artifact-dash-bg: 348 100% 96%;
+    
+    --artifact-space: 207 90% 50%;
+    --artifact-space-bg: 207 100% 96%;
+    
+    --artifact-invisible: 35 92% 50%;
+    --artifact-invisible-bg: 40 100% 95%;
+    
+    --artifact-quote: 270 95% 65%;
+    --artifact-quote-bg: 270 100% 97%;
+    
+    --artifact-control: 24 95% 50%;
+    --artifact-control-bg: 24 100% 95%;
+    
+    --artifact-functional: 170 85% 42%;
+    --artifact-functional-bg: 170 100% 95%;
+    
+    --artifact-special: 220 15% 55%;
+    --artifact-special-bg: 220 15% 95%;
+    
+    --artifact-hyphen: 320 80% 55%;
+    --artifact-hyphen-bg: 320 100% 96%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 224 25% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 224 25% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 224 25% 9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 250 89% 68%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 20% 14%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 20% 13%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 250 89% 68%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 224 20% 16%;
+    --input: 224 20% 16%;
+    --ring: 250 89% 68%;
+
+    /* Dark Mode Glass tokens */
+    --surface-glass: rgba(13, 17, 28, 0.45);
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+
+    /* Artifact highlights (Dark Mode - optimized for contrast on dark backgrounds) */
+    --artifact-dash-bg: 348 65% 20%;
+    --artifact-space-bg: 207 65% 18%;
+    --artifact-invisible-bg: 35 60% 18%;
+    --artifact-quote-bg: 270 60% 20%;
+    --artifact-control-bg: 24 60% 18%;
+    --artifact-functional-bg: 170 65% 16%;
+    --artifact-special-bg: 220 15% 22%;
+    --artifact-hyphen-bg: 320 60% 19%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors duration-200;
+  }
+  body {
+    @apply bg-background text-foreground antialiased overflow-x-hidden;
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: var(--surface-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass);
+    border-radius: var(--radius);
+    transition: all 0.3s var(--ease-out);
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.06), var(--shadow-glass);
+  }
+
+  .dark .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4), var(--shadow-glass);
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Stunning background glowing blobs */
+.bg-blobs-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  animation: pulse-blob 20s infinite alternate ease-in-out;
+  transition: opacity 0.5s ease;
+}
+
+.dark .bg-blob {
+  opacity: 0.15;
+  mix-blend-mode: screen;
+  filter: blur(140px);
+}
+
+.bg-blob-primary {
+  top: -10%;
+  right: -5%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.5) 0%, transparent 70%);
+}
+
+.bg-blob-secondary {
+  bottom: -15%;
+  left: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, hsl(270 90% 70% / 0.45) 0%, transparent 70%);
+  animation-delay: -5s;
+  animation-duration: 25s;
+}
+
+.bg-blob-accent {
+  top: 40%;
+  left: 30%;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, hsl(180 80% 50% / 0.25) 0%, transparent 70%);
+  animation-delay: -10s;
+  animation-duration: 18s;
+}
+
+@keyframes pulse-blob {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.15);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+/* Artifact highlight tags */
+.artifact-highlight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 5px;
+  margin: 1px 1.5px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-family: monospace;
+  font-size: 0.85em;
+  border: 1.5px solid;
+  cursor: help;
+  -webkit-user-select: none;
+  user-select: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s var(--ease-out);
+}
+
+.artifact-highlight:hover {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.artifact-dash { background: hsl(var(--artifact-dash-bg)); border-color: hsl(var(--artifact-dash)); color: hsl(var(--artifact-dash)); }
+.artifact-space { background: hsl(var(--artifact-space-bg)); border-color: hsl(var(--artifact-space)); color: hsl(var(--artifact-space)); }
+.artifact-invisible { background: hsl(var(--artifact-invisible-bg)); border-color: hsl(var(--artifact-invisible)); color: hsl(var(--artifact-invisible)); }
+.artifact-quote { background: hsl(var(--artifact-quote-bg)); border-color: hsl(var(--artifact-quote)); color: hsl(var(--artifact-quote)); }
+.artifact-control { background: hsl(var(--artifact-control-bg)); border-color: hsl(var(--artifact-control)); color: hsl(var(--artifact-control)); }
+.artifact-functional { background: hsl(var(--artifact-functional-bg)); border-color: hsl(var(--artifact-functional)); color: hsl(var(--artifact-functional)); }
+.artifact-special { background: hsl(var(--artifact-special-bg)); border-color: hsl(var(--artifact-special)); color: hsl(var(--artifact-special)); }
+.artifact-hyphen { background: hsl(var(--artifact-hyphen-bg)); border-color: hsl(var(--artifact-hyphen)); color: hsl(var(--artifact-hyphen)); }
+
+/* Declarative isolation modes for active filter legend items */
+.isolate-dash .artifact-highlight:not(.artifact-dash),
+.isolate-space .artifact-highlight:not(.artifact-space),
+.isolate-invisible .artifact-highlight:not(.artifact-invisible),
+.isolate-quote .artifact-highlight:not(.artifact-quote),
+.isolate-control .artifact-highlight:not(.artifact-control),
+.isolate-functional .artifact-highlight:not(.artifact-functional),
+.isolate-special .artifact-highlight:not(.artifact-special),
+.isolate-hyphen .artifact-highlight:not(.artifact-hyphen) {
+  opacity: 0.12;
+  filter: grayscale(85%) blur(0.3px);
+  scale: 0.95;
+  box-shadow: none;
+  border-style: dashed;
+}
+
+.isolate-dash .artifact-dash,
+.isolate-space .artifact-space,
+.isolate-invisible .artifact-invisible,
+.isolate-quote .artifact-quote,
+.isolate-control .artifact-control,
+.isolate-functional .artifact-functional,
+.isolate-special .artifact-special,
+.isolate-hyphen .artifact-hyphen {
+  box-shadow: 0 0 16px currentColor;
+  transform: translateY(-2px) scale(1.08);
+  z-index: 10;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border) / 0.8);
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.4);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
