@@ -443,9 +443,18 @@ const Index = () => {
                 </button>
               </div>
             )}
+
+            {/* Cards Secundários colocados DEBAIXO das caixas de texto (Pix e InfoCard) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+              {/* Apoio Financeiro / Pix */}
+              <PixDonation />
+              
+              {/* Caixa Informativa */}
+              <InfoCard />
+            </div>
           </div>
 
-          {/* Coluna da Barra Lateral (Direita) - Melhor Organizada e 100% Responsiva */}
+          {/* Coluna da Barra Lateral (Direita) - Focada estritamente em Métricas e Filtros */}
           <aside className="lg:col-span-4 space-y-6">
             {/* Painel de Análise */}
             <StatsPanel stats={stats} total={total} charCount={displayedText.length} />
@@ -463,15 +472,6 @@ const Index = () => {
 
             {/* Legenda Interativa */}
             <Legend activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
-            
-            {/* Organizador de Widgets Secundários - Lado a Lado em Tablets, empilhados em Celulares e Desktops */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
-              {/* Apoio Financeiro / Pix */}
-              <PixDonation />
-              
-              {/* Caixa Informativa */}
-              <InfoCard />
-            </div>
           </aside>
         </div>
       </main>
