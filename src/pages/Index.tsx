@@ -35,7 +35,13 @@ const Index = () => {
   const [showCleaned, setShowCleaned] = useState(false);
   const [copyLabel, setCopyLabel] = useState("Copiar Texto Limpo");
   const [isCopied, setIsCopied] = useState(false);
-  const [workspaceMode, setWorkspaceMode] = useState<"split" | "tabs">("split");
+  const [workspaceMode, setWorkspaceMode] = useState<"split" | "tabs">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("workspaceMode");
+      if (saved === "split" || saved === "tabs") return saved;
+    }
+    return "split"; // Default split (Lado a Lado)
+  });
   const [useMonospace, setUseMonospace] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   
@@ -62,22 +68,10 @@ const Index = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Listener para ajustar o layout automaticamente e torná-lo super responsivo em celulares
+  // Efeito para salvar a preferência do modo de visualização (Lado a Lado ou Abas)
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setWorkspaceMode("tabs");
-      } else {
-        setWorkspaceMode("split");
-      }
-    };
-    
-    // Executa no carregamento inicial
-    handleResize();
-    
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    localStorage.setItem("workspaceMode", workspaceMode);
+  }, [workspaceMode]);
 
   const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
