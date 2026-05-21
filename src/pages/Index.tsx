@@ -204,10 +204,10 @@ const Index = () => {
         <section className="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/15 relative overflow-hidden backdrop-blur-sm">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="space-y-1 z-10">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-black text-foreground">
+              <h2 className="text-xl sm:text-xl md:text-2xl font-black text-foreground">
                 Higienize seus Textos de Inteligência Artificial
               </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground max-w-xl">
+              <p className="text-sm text-muted-foreground max-w-xl">
                 Detecte e filtre instantaneamente marcações d'água de Unicode, hífens especiais, aspas tipográficas e espaços invisíveis gerados por IAs.
               </p>
             </div>
@@ -282,7 +282,7 @@ const Index = () => {
                 <GlassCard className="flex flex-col h-full">
                   <GlassCardHeader>
                     <CardLabel>📝 Texto Original</CardLabel>
-                    <span className="text-[10px] sm:text-xs tabular text-muted-foreground/80 font-mono">
+                    <span className="text-xs tabular text-muted-foreground/80 font-mono">
                       {text.length.toLocaleString()} carac.
                     </span>
                   </GlassCardHeader>
@@ -292,7 +292,7 @@ const Index = () => {
                     onChange={handleTextChange}
                     placeholder="Cole seu texto gerado por IA aqui para iniciar a análise..."
                     className={cn(
-                      "w-full h-80 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
+                      "w-full h-80 p-4 sm:p-5 text-base leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
                       useMonospace ? "font-mono" : "font-sans"
                     )}
                   />
@@ -309,7 +309,7 @@ const Index = () => {
                         {!showCleaned && total > 0 && (
                           <button
                             onClick={handleClean}
-                            className="text-[10px] sm:text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
+                            className="text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
                           >
                             Limpar Tudo
                           </button>
@@ -317,7 +317,7 @@ const Index = () => {
                         <button
                           onClick={handleCopy}
                           className={cn(
-                            "text-[10px] sm:text-xs font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
+                            "text-xs font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
                             isCopied ? "text-emerald-500" : "text-muted-foreground hover:text-foreground"
                           )}
                         >
@@ -329,7 +329,7 @@ const Index = () => {
                   </GlassCardHeader>
                   <div
                     className={cn(
-                      "w-full h-80 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl transition-all duration-300",
+                      "w-full h-80 p-4 sm:p-5 text-base leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl transition-all duration-300",
                       useMonospace ? "font-mono" : "font-sans",
                       activeCategory ? `isolate-${activeCategory}` : "",
                       text ? "text-foreground" : "text-muted-foreground/50"
@@ -356,7 +356,7 @@ const Index = () => {
                   <GlassCard>
                     <GlassCardHeader>
                       <CardLabel>📝 Texto Original</CardLabel>
-                      <span className="text-[10px] sm:text-xs tabular text-muted-foreground font-mono">
+                      <span className="text-xs tabular text-muted-foreground font-mono">
                         {text.length.toLocaleString()} caracteres
                       </span>
                     </GlassCardHeader>
@@ -366,7 +366,7 @@ const Index = () => {
                       onChange={handleTextChange}
                       placeholder="Cole seu texto de IA aqui..."
                       className={cn(
-                        "w-full h-96 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
+                        "w-full h-96 p-4 sm:p-5 text-base leading-relaxed bg-transparent text-card-foreground resize-none outline-none focus:ring-0 rounded-b-xl border-none",
                         useMonospace ? "font-mono" : "font-sans"
                       )}
                     />
@@ -382,7 +382,7 @@ const Index = () => {
                           {!showCleaned && total > 0 && (
                             <button
                               onClick={handleClean}
-                              className="text-[10px] sm:text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
+                              className="text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
                             >
                               Limpar Tudo
                             </button>
@@ -390,7 +390,7 @@ const Index = () => {
                           <button
                             onClick={handleCopy}
                             className={cn(
-                              "text-[10px] sm:text-xs font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
+                              "text-xs font-bold flex items-center gap-1 transition-all uppercase tracking-wider",
                               isCopied ? "text-emerald-500" : "text-muted-foreground hover:text-foreground"
                             )}
                           >
@@ -402,7 +402,7 @@ const Index = () => {
                     </GlassCardHeader>
                     <div
                       className={cn(
-                        "w-full h-96 p-4 sm:p-5 text-[15px] sm:text-base leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl",
+                        "w-full h-96 p-4 sm:p-5 text-base leading-relaxed overflow-y-auto whitespace-pre-wrap break-words border-none rounded-b-xl",
                         useMonospace ? "font-mono" : "font-sans",
                         activeCategory ? `isolate-${activeCategory}` : "",
                         text ? "text-foreground" : "text-muted-foreground/50"
@@ -438,12 +438,8 @@ const Index = () => {
               </div>
             )}
 
-            {/* Cards Secundários colocados DEBAIXO das caixas de texto (Pix e InfoCard) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-              {/* Apoio Financeiro / Pix */}
-              <PixDonation />
-              
-              {/* Caixa Informativa */}
+            {/* Caixa Informativa colocada DEBAIXO das caixas de texto */}
+            <div className="pt-2">
               <InfoCard />
             </div>
           </div>
@@ -466,6 +462,9 @@ const Index = () => {
 
             {/* Legenda Interativa */}
             <Legend activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
+
+            {/* Apoio Financeiro / Pix */}
+            <PixDonation />
           </aside>
         </div>
       </main>

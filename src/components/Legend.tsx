@@ -27,14 +27,14 @@ export function Legend({ activeCategory, onSelectCategory }: LegendProps) {
         {activeCategory && (
           <button
             onClick={() => onSelectCategory(null)}
-            className="text-[10px] font-bold text-primary hover:underline uppercase tracking-wider"
+            className="text-xs font-bold text-primary hover:underline uppercase tracking-wider"
           >
             Limpar Filtro
           </button>
         )}
       </div>
       
-      <p className="text-[11px] text-muted-foreground mb-3 leading-relaxed">
+      <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
         Clique em uma categoria abaixo para isolá-la e destacá-la no texto de análise.
       </p>
 
@@ -58,7 +58,7 @@ export function Legend({ activeCategory, onSelectCategory }: LegendProps) {
             >
               <div className="flex items-center gap-2.5">
                 <div className={cn("w-3.5 h-3.5 rounded-sm border-2 shrink-0 transition-transform duration-200", colorMap[key], isActive && "scale-110")} />
-                <span className={cn("text-[13px] sm:text-sm transition-colors", isActive ? "font-medium text-foreground" : "text-muted-foreground")}>
+                <span className={cn("text-sm transition-colors", isActive ? "font-medium text-foreground" : "text-muted-foreground")}>
                   {label}
                 </span>
               </div>

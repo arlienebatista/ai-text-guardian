@@ -37,7 +37,7 @@ export function StatsPanel({ stats, total, charCount }: StatsPanelProps) {
     <GlassCard className="p-5 flex flex-col gap-4">
       <div>
         <h3 className="text-sm font-semibold text-foreground mb-1">Painel de Estatísticas</h3>
-        <p className="text-[11px] text-muted-foreground leading-relaxed">
+        <p className="text-xs text-muted-foreground leading-relaxed">
           Métricas de qualidade e integridade do seu texto em tempo real.
         </p>
       </div>
@@ -45,7 +45,7 @@ export function StatsPanel({ stats, total, charCount }: StatsPanelProps) {
       {/* Indicador do Índice de Pureza */}
       <div className="p-3.5 rounded-xl bg-muted/20 border border-border/40 flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80">
+          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
             Índice de Pureza
           </span>
           <span className={`text-base font-bold font-mono ${status.color}`}>
@@ -59,7 +59,7 @@ export function StatsPanel({ stats, total, charCount }: StatsPanelProps) {
           indicatorClassName={getProgressColor()}
         />
 
-        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-semibold border ${status.color} ${status.bg} w-fit`}>
+        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border ${status.color} ${status.bg} w-fit`}>
           <StatusIcon className="w-3 h-3 shrink-0" />
           <span>{status.label.toUpperCase()}</span>
         </div>
@@ -112,7 +112,7 @@ function StatRow({ label, value, highlight, negative, isSubRow }: {
     <div className={`flex justify-between items-center py-2 border-b border-border/30 last:border-b-0 ${
       isSubRow ? "pl-2.5" : ""
     }`}>
-      <span className={`text-[13px] sm:text-sm ${
+      <span className={`text-sm ${
         highlight 
           ? 'font-semibold text-foreground' 
           : isSubRow 
@@ -121,7 +121,7 @@ function StatRow({ label, value, highlight, negative, isSubRow }: {
       }`}>
         {label}
       </span>
-      <span className={`text-[13px] sm:text-sm font-mono font-semibold tabular ${
+      <span className={`text-sm font-mono font-semibold tabular ${
         negative ? 'text-destructive' : highlight ? 'text-foreground' : 'text-muted-foreground'
       }`}>
         {value.toLocaleString()}
